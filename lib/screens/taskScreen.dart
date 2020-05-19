@@ -1,18 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:todo/models/task.dart';
 import 'package:todo/screens/BottomSheetScreen.dart';
 import 'package:todo/widgets/taskList.dart';
+import 'package:todo/models/task_data.dart';
+import 'package:provider/provider.dart';
 
-class MyTaskScreen extends StatefulWidget {
-  @override
-  _MyTaskScreenState createState() => _MyTaskScreenState();
-}
-
-class _MyTaskScreenState extends State<MyTaskScreen> {
-  List<Task> tasks = [
-    Task(name: "Fazer todo app", isDone: true),
-  ];
-
+class MyTaskScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +38,7 @@ class _MyTaskScreenState extends State<MyTaskScreen> {
                   ),
                 ),
                 Text(
-                  '${tasks.length} tarefas',
+                  '${Provider.of<TaskData>(context).taskCount} tarefa${Provider.of<TaskData>(context).taskCount == 1 ? '' : 's'}',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18,
@@ -70,7 +62,7 @@ class _MyTaskScreenState extends State<MyTaskScreen> {
                 topRight: Radius.circular(20),
               ),
             ),
-            child: TaskList(tasks: tasks),
+            child: TaskList(),
           ),
         )
       ]),
@@ -83,14 +75,7 @@ class _MyTaskScreenState extends State<MyTaskScreen> {
               builder: (context) => SingleChildScrollView(
                   child:Container(
                     padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                    child: BottomSheetScreen(
-                      addTodoCallback: (novaTarefaTitulo){
-                        setState(() {
-                          tasks.add(Task(name: novaTarefaTitulo, isDone: false));
-                        });
-                        Navigator.pop(context);
-                      },
-                    ),
+                    child: BottomSheetScreen(),
                   )
               )
           );

@@ -1,13 +1,9 @@
-
-
+import 'package:todo/models/task_data.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class BottomSheetScreen extends StatelessWidget {
-
-  final Function addTodoCallback;
-
-  const BottomSheetScreen({Key key, this.addTodoCallback}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +46,8 @@ class BottomSheetScreen extends StatelessWidget {
             SizedBox(height: 20,),
             FlatButton(
               onPressed: (){
-                addTodoCallback(title);
+                Provider.of<TaskData>(context,listen: false).addTask(title);
+                Navigator.pop(context);
               },
               child: Text("Add", style: TextStyle(color: Colors.white, fontSize: 24)),
               color: Colors.lightBlueAccent,
